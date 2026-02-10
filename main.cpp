@@ -1,10 +1,22 @@
 #include <iostream>
 #include "Cell.h"
+#include "Battery.h"
+#include "Load.h"
+
+using namespace std;
 
 int main() {
-    std::cout << "Hello world" << std::endl;
-    Cell* mojaBunka = new Cell(100);
-    std::cout << "Adresa v pamati: " << mojaBunka << std::endl;
-    std::cout << "Hodnota kapacity: " << mojaBunka->getMaxCapacity() << std::endl;
+    Battery battery;
+    battery.addCell(new Cell(100.0));
+    Load load(10.0);
+
+    for (int i = 0; i < 4; i++)
+    {
+        battery.dischargeBattery(load.getConsumption());
+        cout << "Batery current energy " << battery.getEnergy() << endl;
+        cout << " " << endl;
+    }
+    
+
     return 0;
 }
