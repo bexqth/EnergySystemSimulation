@@ -1,0 +1,15 @@
+simulation
+main
+*.o
+*.out
+
+.DS_Store
+
+*.dSYM/
+
+.vscode/
+
+build/
+*.xcodeproj/
+
+*.log
