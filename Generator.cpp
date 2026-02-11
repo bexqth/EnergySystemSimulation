@@ -19,7 +19,7 @@ void Generator::addModule(Module *module)
 void Generator::printInfo()
 {
     std::string state = this->isTurnedOn ? "ON" : "OFF";
-    cout << this->name << " " << std::round(this->getTotalProduction() * 100.0) / 100.0 << " " << state << endl;
+    cout << " " << this->name << " " << std::round(this->getTotalProduction() * 100.0) / 100.0 << " " << state << endl;
     for (auto& module : this->modules)
     {
         cout << "  - ";

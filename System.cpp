@@ -1,4 +1,7 @@
 #include "System.h"
+#include <iostream>
+
+using namespace std;
 
 System::System()
 {
@@ -23,16 +26,50 @@ void System::addLoad(Load *load)
     this->loads.push_back(load);
 }
 
-double System::getTotalConsumption() const
+double System::getTotalConsumption()
 {
-    return 0.0;
+    double totalCon = 0.0;
+    for(auto& load : this->loads) {
+        totalCon += load->getConsumption();
+    }
+    this->totalConsumption = totalCon;
+    return this->totalConsumption;
 }
 
-double System::getTotalProduction() const
+double System::getTotalProduction()
 {
-    return 0.0;
+    double totalProd = 0.0;
+    for(auto& gen : this->generators) {
+        if(gen->getIsTurnedOn()) {
+            totalProd += gen->getTotalProduction();
+        }
+    }
+    this->totalProduction = totalProd;
+    return this->totalProduction;
 }
 
 void System::tick()
 {
+    this->getTotalConsumption();
+    this->getTotalProduction();
+
+    cout << "Tick " << this->tickNumber << endl;
+    cout << "Generators" << endl;
+    for(auto& gen : this->generators) {
+        gen->printInfo();
+    }
+
+    cout << "Total consumption: " << to_string(this->totalConsumption) << endl;
+    cout << "Total production: " << to_string(this->totalProduction) << endl;
+    this->printState();
+    tickNumber++;
+}
+
+void System::printState()
+{
+    if(this->totalConsumption > this->totalProduction) {
+        cout << "Alarm : consumption > production" << endl;
+    } else {
+        cout << "Alarm OK" << endl;
+    }
 }

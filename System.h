@@ -10,16 +10,17 @@ class System
         std::vector<Battery*> bateries;
         std::vector<Load*> loads;
         std::vector<Generator*> generators;
-        int step;
-        int totalConsumption;
-        int totalProduction;
+        int tickNumber = 0;
+        double totalConsumption;
+        double totalProduction;
     public:
         System();
         ~System();
         void addGenerator(Generator* gen);
         void addBattery(Battery* batt);
         void addLoad(Load* load);
-        double getTotalConsumption() const;
-        double getTotalProduction() const;
+        double getTotalConsumption();
+        double getTotalProduction();
         void tick();
+        void printState();
 };
