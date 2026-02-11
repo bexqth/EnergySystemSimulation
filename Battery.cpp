@@ -17,13 +17,14 @@ void Battery::addCell(Cell* cell)
     this->cells.push_back(cell);
 }
 
-void Battery::chargeBattery(double amount)
+double Battery::chargeBattery(double amount)
 {
     double remaining = amount;
     for (int i = 0; i < this->cells.size(); i++)
     {
         remaining = this->cells[i]->chargeCell(remaining);  
     }
+    return remaining;
     
 }
 

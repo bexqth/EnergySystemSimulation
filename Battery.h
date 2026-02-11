@@ -11,7 +11,7 @@ class Battery
         Battery();
         ~Battery();
         void addCell(Cell* cell);
-        void chargeBattery(double amount);
+        double chargeBattery(double amount);
         void dischargeBattery(double amount);
         double getCapacity();
         double getEnergy();
