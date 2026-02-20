@@ -43,8 +43,8 @@ int main() {
 
     tgui::Gui gui{window};
 
-    ToolBox toolBox(gui);
-    Workspace workspace(gui);
+    Workspace workspace(gui, winWidth, winHeight);
+    ToolBox toolBox(gui, &workspace);
 
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
@@ -56,6 +56,7 @@ int main() {
         }
 
         window.clear(sf::Color(40, 44, 52));
+        workspace.draw(window);
         gui.draw();
 
         window.display();

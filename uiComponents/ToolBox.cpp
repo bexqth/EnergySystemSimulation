@@ -1,6 +1,7 @@
 #include "ToolBox.h"
+#include "Workspace.h"
 
-ToolBox::ToolBox(tgui::BackendGuiSFML &gui)
+ToolBox::ToolBox(tgui::BackendGuiSFML &gui, Workspace* workspace) : workspace(workspace)
 {
     this->toolboxPanel = tgui::Panel::create();
     this->titleLabel = tgui::Label::create();
@@ -45,9 +46,18 @@ void ToolBox::setButtons()
         buttons[i]->setSize(buttonSize, buttonSize);   
         float posX = startX + (i * (buttonSize + space));
         buttons[i]->setPosition(posX, startY);
+        buttons[i]->onRightMousePress(&ToolBox::handleMouseClick, this, buttons[i]->getText());
         toolboxPanel->add(buttons[i]);
     }
 
+}
+
+void ToolBox::handleMouseClick(tgui::String buttonType)
+{
+    if (buttonType == "Gen") {
+        this->workspace->addComponent("Gen");
+    }
+    std::cout << "button clicked " << buttonType << std::endl;
 }
 
 ToolBox::~ToolBox()
