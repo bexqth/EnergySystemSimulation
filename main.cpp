@@ -4,6 +4,7 @@
 #include <iostream>
 #include "uiComponents/ToolBox.h"
 #include "uiComponents/Workspace.h"
+#include "uiComponents/InfoBox.h"
 
 using namespace std;
 
@@ -45,6 +46,7 @@ int main() {
 
     Workspace workspace(gui, winWidth, winHeight);
     ToolBox toolBox(gui, &workspace);
+    InfoBox infoBox(gui);
 
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
