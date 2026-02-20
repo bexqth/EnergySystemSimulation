@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <TGUI/TGUI.hpp>
+#include <TGUI/Backend/SFML-Graphics.hpp>
 #include <iostream>
 #include "uiComponents/ToolBox.h"
 #include "uiComponents/Workspace.h"
@@ -36,21 +38,30 @@ int main() {
     float sidebarWidth = winWidth * 0.2f;
     float workspaceWidth = winWidth * 0.8f;
 
-    auto window = sf::RenderWindow(sf::VideoMode({winWidth, winHeight}), "Electrostatic Simulation");
+    sf::RenderWindow window(sf::VideoMode({winWidth, winHeight}), "Energy System Simulation");
     window.setFramerateLimit(75);
+
+    tgui::Gui gui{window};
 
     ToolBox toolBox({sidebarWidth, (float)winHeight}, {0.f, 0.f});
     Workspace workspace({workspaceWidth, (float)winHeight}, {sidebarWidth, 0.f});
 
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
-            if (event->is<sf::Event::Closed>())
+            gui.handleEvent(*event);
+
+            if (event->is<sf::Event::Closed>()) {
                 window.close();
+            }
         }
 
-        window.clear(sf::Color::Red);
-        window.draw(toolBox);
+        window.clear(sf::Color(33, 37, 43));
+
         window.draw(workspace);
+        window.draw(toolBox);
+
+        gui.draw();
+
         window.display();
     }
 
