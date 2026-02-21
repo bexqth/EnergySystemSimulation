@@ -1,11 +1,13 @@
 #pragma once
+#include "Component.h"
 
-class Load
+
+class Load : public Component
 {
     private:
         double consumption;
     public:
-        Load(double consumption);
+        Load(double consumption, sf::Vector2f pos);
         ~Load();
         double getConsumption() const;
 };

@@ -2,6 +2,8 @@
 #include <iostream>
 #include "../library/Component.h"
 #include "../library/Generator.h"
+#include "../library/Battery.h"
+#include "../library/Load.h"
 
 using namespace std;
 
@@ -57,6 +59,10 @@ void Workspace::addComponent(std::string type)
     float posY = this->winHeight / 2;
     if(type == "Gen") {
         this->components.push_back(std::make_unique<Generator>("Gen 1", sf::Vector2f(posX, posY)));
+    } else if(type == "Batt") {
+        this->components.push_back(std::make_unique<Battery>(sf::Vector2f(posX, posY)));
+    } else if(type == "Load") {
+        this->components.push_back(std::make_unique<Load>(15.5, sf::Vector2f(posX, posY)));
     }
 }
 

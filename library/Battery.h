@@ -1,14 +1,15 @@
 #pragma once
 #include <vector>
 #include "Cell.h"
+#include "Component.h"
 
-class Battery
+class Battery : public Component
 {
     private:
         std::vector<Cell*> cells;
 
     public:
-        Battery();
+        Battery(sf::Vector2f pos);
         ~Battery();
         void addCell(Cell* cell);
         double chargeBattery(double amount);

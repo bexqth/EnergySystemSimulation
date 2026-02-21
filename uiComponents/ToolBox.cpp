@@ -60,6 +60,10 @@ void ToolBox::handleMouseClick(tgui::String buttonType)
 {
     if (buttonType == "Gen") {
         this->workspace->addComponent("Gen");
+    } else if(buttonType == "Batt") {
+        this->workspace->addComponent("Batt");
+    } else if(buttonType == "Load") {
+        this->workspace->addComponent("Load");
     }
     std::cout << "button clicked " << buttonType << std::endl;
 }
