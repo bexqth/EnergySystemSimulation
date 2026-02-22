@@ -5,8 +5,10 @@ using namespace std;
 
 Component::Component(sf::Vector2f position, sf::Color color, std::string type, std::string name, int coreValue) : position(position), color(color), type(type), name(name), coreValue(coreValue)
 {   
-    if (!sharedFont.openFromFile("assets/Roboto-Regular.ttf")) {
-        cout << "failed to load font " << endl;
+    if (!fontLoaded) {
+        if (sharedFont.openFromFile("assets/Roboto-Regular.ttf")) {
+            fontLoaded = true;
+        }
     }
 
     this->shape.setSize({50.f, 50.f});
@@ -45,11 +47,27 @@ void Component::move(sf::RenderWindow& window)
     
 }
 
-bool Component::isClicked(sf::Vector2f mousePosition)
+bool Component::isRightClicked(sf::Vector2f mousePosition)
 {
     if(mousePosition.x > this->position.x && mousePosition.y > this->position.y && mousePosition.x < this->position.x + this->shape.getSize().x && mousePosition.y < this->position.y + this->shape.getSize().y) {
         this->isGrabbed = (!this->isGrabbed);
         cout << "is grabbed: " << this->isGrabbed << endl;
+        return true;
+    }
+    return false;
+}
+
+Component *Component::isLeftClicked(sf::Vector2f mousePosition)
+{
+    if(mousePosition.x > this->position.x && mousePosition.y > this->position.y && mousePosition.x < this->position.x + this->shape.getSize().x && mousePosition.y < this->position.y + this->shape.getSize().y) {
+        return this;
+    }
+    return nullptr;
+}
+
+bool Component::isClicked(sf::Vector2f mousePosition)
+{
+    if(mousePosition.x > this->position.x && mousePosition.y > this->position.y && mousePosition.x < this->position.x + this->shape.getSize().x && mousePosition.y < this->position.y + this->shape.getSize().y) {
         return true;
     }
     return false;
@@ -65,6 +83,11 @@ void Component::setIsGrabbed(bool b)
     this->isGrabbed = b;
 }
 
+bool Component::getIsGrapped() const
+{
+    return this->isGrabbed;
+}
+
 sf::RectangleShape Component::getShape()
 {
     return this->shape;
@@ -78,4 +101,14 @@ void Component::setName(std::string n)
 std::string Component::getName() const
 {
     return this->name;
+}
+
+bool Component::getIsTurnedOn() const
+{
+    return this->isTurnedOn;
+}
+
+void Component::setIsTurnedOn(bool b)
+{
+    this->isTurnedOn = b;
 }

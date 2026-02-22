@@ -1,6 +1,8 @@
+#pragma once
 #include <TGUI/TGUI.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
 #include <string>
+#include "../library/Component.h"
 
 class InfoBox
 {
@@ -21,8 +23,12 @@ private:
     tgui::Button::Ptr saveButton;
     tgui::Button::Ptr deleteButton;
 
+    Component* selectedComponent;
+
 public:
     InfoBox(tgui::Gui& gui);
     ~InfoBox() = default;
     void setInfoBox(tgui::Gui& gui);
+    void setSelectedComponent(Component* component);
+    void displayInfo();
 };

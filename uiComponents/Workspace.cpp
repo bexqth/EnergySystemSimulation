@@ -7,11 +7,12 @@
 
 using namespace std;
 
-Workspace::Workspace(tgui::BackendGuiSFML &gui, unsigned int winWidth, unsigned int winHeight) : winWidth(winWidth), winHeight(winHeight)
+Workspace::Workspace(tgui::BackendGuiSFML &gui, unsigned int winWidth, unsigned int winHeight, InfoBox infoBox) : winWidth(winWidth), winHeight(winHeight), infoBox(infoBox)
 {
     this->workspacePanel = tgui::Panel::create();
     this->setWorkspace(gui);
-    this->workspacePanel->onRightMousePress(&Workspace::handleMouseClick, this);
+    this->workspacePanel->onRightMousePress(&Workspace::handleRightMouseClick, this);
+    this->workspacePanel->onMousePress(&Workspace::handleLeftMouseClick, this);
     this->grabbedComponent = nullptr;
 }
 
@@ -24,7 +25,7 @@ void Workspace::setWorkspace(tgui::BackendGuiSFML &gui)
     gui.add(this->workspacePanel);
 }
 
-void Workspace::handleMouseClick(tgui::Vector2f pos)
+void Workspace::handleRightMouseClick(tgui::Vector2f pos)
 {
     if(this->grabbedComponent != nullptr) {
         this->grabbedComponent->setIsGrabbed(false);
@@ -35,13 +36,30 @@ void Workspace::handleMouseClick(tgui::Vector2f pos)
     } else {
         for (auto& com : this->components)
         {
-            if(com->isClicked({pos.x + this->winWidth * 0.2f, pos.y})) {
+            /*if(com->isRightClicked({pos.x + this->winWidth * 0.2f, pos.y})) {
                 this->grabbedComponent = com.get();
                 cout << "Component grabbed" << endl;
                 return;
-            }
+            }*/
+           if(com->isClicked({pos.x + this->winWidth * 0.2f, pos.y})) {
+                this->grabbedComponent = com.get();
+                this->grabbedComponent->setIsGrabbed(!this->grabbedComponent->getIsGrapped());
+                cout << "Component grabbed" << endl;
+                return;
+           }
         }
     }
+}
+
+void Workspace::handleLeftMouseClick(tgui::Vector2f pos)
+{
+    for (auto& com : this->components)
+        {
+            if(com->isClicked({pos.x + this->winWidth * 0.2f, pos.y})) {
+                this->infoBox.setSelectedComponent(com.get());
+                this->infoBox.displayInfo();
+           }
+        }
 }
 
 void Workspace::handleMouseMove(sf::Vector2f mousePos)

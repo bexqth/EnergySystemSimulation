@@ -1,5 +1,7 @@
 #include "InfoBox.h"
 
+using namespace std;
+
 InfoBox::InfoBox(tgui::Gui& gui)
 {
     this->infoPanel = tgui::Panel::create();
@@ -93,4 +95,21 @@ void InfoBox::setInfoBox(tgui::Gui& gui)
     this->infoPanel->add(this->logArea);
 
     gui.add(this->infoPanel);
+}
+
+void InfoBox::setSelectedComponent(Component* component)
+{
+    this->selectedComponent = component;
+}
+
+void InfoBox::displayInfo()
+{
+    this->nameEdit->setText(this->selectedComponent->getName());
+    string status;
+    if(this->selectedComponent->getIsTurnedOn()) {
+        status = "ON";
+    } else {
+        status = "OFF";
+    }
+    this->statusLabel->setText("Status: " + status);
 }

@@ -44,9 +44,9 @@ int main() {
 
     tgui::Gui gui{window};
 
-    Workspace workspace(gui, winWidth, winHeight);
-    ToolBox toolBox(gui, &workspace);
     InfoBox infoBox(gui);
+    Workspace workspace(gui, winWidth, winHeight, infoBox);
+    ToolBox toolBox(gui, &workspace);
 
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
